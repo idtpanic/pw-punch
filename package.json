@@ -1,0 +1,55 @@
+{
+  "name": "pw-punch",
+  "version": "1.0.1",
+  "description": "🔐 Ultra-lightweight password hashing & token signing with WebCrypto. Zero dependencies. Edge-native. Built for Cloudflare, Deno, Bun, and Vercel.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "build-bun": "bun build src/index.ts --outdir dist --minify --target=browser --format=esm",
+    "demo": "bun test/demo.ts",
+    "test": "bun test"
+  },
+  "keywords": [
+    "crypto",
+    "hmac",
+    "password-hashing",
+    "pbkdf2",
+    "jwt",
+    "token",
+    "webcrypto",
+    "cloudflare",
+    "edge",
+    "deno",
+    "bun",
+    "serverless",
+    "vercel",
+    "demo",
+    "auth",
+    "authentication",
+    "hashing",
+    "hash",
+    "jwt-style",
+    "lightweight",
+    "zero-dependency"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idtpanic/pw-punch.git"
+  },
+  "author": "idtpanic",
+  "license": "MIT"
+}

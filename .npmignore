@@ -1,0 +1,25 @@
+# Ignore test & demo files
+test/
+.vscode/
+.github/
+.vscode/
+*.spec.ts
+demo.ts
+
+# Ignore config files not needed in package
+.eslintrc.json
+.prettierrc
+.editorconfig
+.gitattributes
+.gitignore
+.npmrc
+DEVNOTE.md
+CHANGELOG.md
+update-log.sh
+
+# Ignore ts source (only dist needed)
+src/
+tsconfig.json
+
+# Ignore build-only helper
+.last-changelog-hash
