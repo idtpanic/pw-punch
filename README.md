@@ -1,5 +1,7 @@
 # 🥊 pw-punch
-
+[![npm version](https://img.shields.io/npm/v/pw-punch)](https://www.npmjs.com/package/pw-punch)
+![License](https://img.shields.io/npm/l/pw-punch)
+![gzip size](https://img.shields.io/bundlephobia/minzip/pw-punch)
 > 🔐 **Ultra-lightweight** password hashing & JWT-style token signing with pure **WebCrypto**.  
 > Built for **Edge**, **Serverless**, and modern runtimes like **Cloudflare**, **Deno**, **Vercel**, **Bun** — _no Node.js required_.  
 > **Zero dependencies. Zero bloat. Just crypto.**
@@ -11,7 +13,7 @@
 - ✅ **0 dependencies** — no install bloat
 - ✅ **0 Node.js required** — pure WebCrypto API
 - ✅ **0 config** — import and go
-- ✅ **~4KB gzipped** — tiny footprint
+- ✅ **~1KB gzipped** — tiny footprint
 - ✅ **Crypto only** — no extra fluff
 
 ---
