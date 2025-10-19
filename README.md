@@ -1,3 +1,5 @@
+
+![pw-punch](https://github.com/user-attachments/assets/e4c5f683-defc-4f7e-ae5a-9d25945dba7c)
 # 🥊 pw-punch
 
 > 🔐 **Ultra-lightweight** password hashing & JWT-style token signing with pure **WebCrypto**.  
