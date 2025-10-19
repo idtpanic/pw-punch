@@ -1,2 +1,2 @@
 export { hashPassword, verifyPassword } from './hash'
-export { signToken, verifyToken } from './token'
+export { signToken, verifyToken, decodeToken } from './token'

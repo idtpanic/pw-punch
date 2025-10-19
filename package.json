@@ -25,7 +25,8 @@
   },
   "keywords": [
     "crypto",
-    "hmac",
+    "rsa",
+    "rs256",
     "password-hashing",
     "pbkdf2",
     "jwt",

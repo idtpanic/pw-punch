@@ -1,4 +1,4 @@
-import { HashType, HashTypeString, TokenPayload, UseType, ValidateOptions, SafePayloadOptions } from './types'
+import { HashType, HashTypeString, TokenType, TokenPayload, ValidateOptions, SafePayloadOptions } from './types'
 
 export const MIN_EXP: number = 60 // 1min
 export const MAX_EXP: number = 2_592_000  // 30days
@@ -8,8 +8,9 @@ export const DEFAULT_EXP: number = 3600
 export const MAX_BYTE_LENGTH: number = 10_000
 export const ENCODER: TextEncoder = new TextEncoder()
 export const SUPPORTED_HASH_TYPES: HashType[] = [256, 512]
-export const DEFAULT_ITERATIONS = 150_000
-export const DEFAULT_HASH_TYPE = 256
+export const DEFAULT_ITERATIONS: number = 150_000
+export const DEFAULT_HASH_TYPE: HashType = 256
+export const DEFAULT_TOKEN_TYPE:TokenType = 'RS256'
 
 export async function punchImportKey(password: string): Promise<CryptoKey> {
   return crypto.subtle.importKey(
@@ -41,27 +42,15 @@ export async function punchDeriveBits(
   )
 }
 
-export async function punchTokenKey(
-  secret: string,
-  type: HashTypeString,
-  use: UseType,
-): Promise<CryptoKey> {
-  const usage: KeyUsage[] = use === 'sign' ? ['sign'] : ['verify']
-  return crypto.subtle.importKey(
-    'raw',
-    ENCODER.encode(secret),
-    { name: 'HMAC', hash: type },
-    false,
-    usage
-  )
-}
+
 
 // 🛡️ Validate token payload
 export function validateToken(payload: TokenPayload, options?: ValidateOptions): boolean {
   const now = Math.floor(Date.now() / 1000)
   if (payload.exp !== undefined && now >= payload.exp) return false
   if (payload.nbf !== undefined && now < payload.nbf) return false
-  if (payload.iat !== undefined && now < payload.iat - 60) return false
+  // iat should not be more than 5 seconds in the future (clock skew tolerance)
+  if (payload.iat !== undefined && now < payload.iat - 5) return false
 
   if (options?.iss && payload.iss !== options.iss) return false
   if (options?.sub && payload.sub !== options.sub) return false

@@ -34,7 +34,7 @@ export async function hashPassword(
   const salt = crypto.getRandomValues(new Uint8Array(32))
 
   const key = await punchImportKey(password)
-  const hash = await punchDeriveBits(key, salt.buffer, iterations, `SHA-${type}`)
+  const hash = await punchDeriveBits(key, salt as BufferSource, iterations, `SHA-${type}`)
 
   const saltBase64 = btoa(String.fromCharCode(...salt))
   const hashBase64 = btoa(String.fromCharCode(...new Uint8Array(hash)))
@@ -63,7 +63,7 @@ export async function verifyPassword(
   const salt = base64ToUint8Array(saltBase64)
   const storedHash = base64ToUint8Array(hashBase64)
   const key = await punchImportKey(password)
-  const hash = await punchDeriveBits(key, salt.buffer, iterations, `SHA-${type}`)
+  const hash = await punchDeriveBits(key, salt as BufferSource, iterations, `SHA-${type}`)
 
   return timingSafeEqualUint8Array(new Uint8Array(hash), storedHash)
 }

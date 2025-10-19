@@ -8,7 +8,7 @@ interface MockData {
   password: string,
   type: HashType,
   iterations: number,
-  secretKey: string,
+  keyPair: CryptoKeyPair | null,
 }
 
 const RESET = '\x1b[0m'
@@ -39,11 +39,24 @@ function ask(): Promise<string> {
   return new Promise(resolve => rl.question(`${CYAN}↪︎ ${RESET}`, resolve))
 }
 
+async function generateKeyPair(): Promise<CryptoKeyPair> {
+  return await crypto.subtle.generateKey(
+    {
+      name: 'RSASSA-PKCS1-v1_5',
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: 'SHA-256'
+    },
+    true,
+    ['sign', 'verify']
+  )
+}
+
 const mock:MockData = {
   password: 'test-password',
   type: 256,
   iterations: 100_000,
-  secretKey: 'test-secret-key',
+  keyPair: null,
 }
 
 const testList = [
@@ -75,11 +88,15 @@ async function core() {
       break
     case '2':
       await runTest(testList[2], async () => {
+        if (!mock.keyPair) {
+          console.log(`   Generating RSA key pair...`)
+          mock.keyPair = await generateKeyPair()
+        }
         const now = Math.floor(Date.now() / 1000)
-        const token = await signToken({ sub: 'user', iat: now, exp: now + 60 }, mock.secretKey)
+        const token = await signToken(mock.keyPair.privateKey, { sub: 'user', iat: now, exp: now + 60 })
         console.log(`   token: ${YELLOW}${token}${RESET}`)
-        console.log(`   secretKey: ${YELLOW}${mock.secretKey}${RESET}`)
-        const verifyResult = await verifyToken(token, mock.secretKey)
+        console.log(`   keyPair: ${YELLOW}generated RSA-2048${RESET}`)
+        const verifyResult = await verifyToken(token, mock.keyPair.publicKey)
         console.log(`   result: ${YELLOW}${JSON.stringify(verifyResult)}${RESET}`)
         return verifyResult
       })
@@ -95,11 +112,15 @@ async function core() {
           return verify
         })
         await runTest(testList[2], async () => {
+          if (!mock.keyPair) {
+            console.log(`   Generating RSA key pair...`)
+            mock.keyPair = await generateKeyPair()
+          }
           const now = Math.floor(Date.now() / 1000)
-          const token = await signToken({ sub: 'user', iat: now, exp: now + 60 }, mock.secretKey)
+          const token = await signToken(mock.keyPair.privateKey, { sub: 'user', iat: now, exp: now + 60 })
           console.log(`   token: ${YELLOW}${token}${RESET}`)
-          console.log(`   secretKey: ${YELLOW}${mock.secretKey}${RESET}`)
-          const verifyResult = await verifyToken(token, mock.secretKey)
+          console.log(`   keyPair: ${YELLOW}generated RSA-2048${RESET}`)
+          const verifyResult = await verifyToken(token, mock.keyPair.publicKey)
           console.log(`   result: ${YELLOW}${JSON.stringify(verifyResult)}${RESET}`)
           return verifyResult
         })
