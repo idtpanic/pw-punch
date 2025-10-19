@@ -291,11 +291,6 @@ This is **not a full JWT spec implementation**.
 
 ---
 
-## 🔮 Roadmap
-
-- [x] Interactive CLI demo
-- [x] JWT claim validation hook
-
 This is the way.
 
 ---

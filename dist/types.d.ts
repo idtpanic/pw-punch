@@ -1,6 +1,6 @@
 export type HashType = 256 | 512;
+export type TokenType = 'RS256';
 export type HashTypeString = 'SHA-256' | 'SHA-512';
-export type UseType = 'sign' | 'verify';
 export interface TokenPayload {
     iss?: string;
     sub?: string;
@@ -25,7 +25,7 @@ export interface ValidateOptions {
     aud?: string;
 }
 export interface JwtHeader {
-    alg: 'HS256' | 'HS512';
+    alg: TokenType;
     typ?: 'JWT';
     kid?: string;
     [key: string]: any;

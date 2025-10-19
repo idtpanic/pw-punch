@@ -1,6 +1,6 @@
 {
   "name": "pw-punch",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "description": "🔐 Ultra-lightweight password hashing & token signing with WebCrypto. Zero dependencies. Edge-native. Built for Cloudflare, Deno, Bun, and Vercel.",
   "type": "module",
   "main": "./dist/index.js",
@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "build-bun": "bun build src/index.ts --outdir dist --minify --target=browser --format=esm",
+    "build:bun": "bun build src/index.ts --outdir dist --minify --target=browser --format=esm",
+    "build:all": "npm run build && npm run build:bun",
     "demo": "bun test/demo.ts",
     "test": "bun test"
   },
