@@ -1,6 +1,6 @@
 {
   "name": "pw-punch",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "🔐 Ultra-lightweight password hashing & token signing with WebCrypto. Zero dependencies. Edge-native. Built for Cloudflare, Deno, Bun, and Vercel.",
   "type": "module",
   "main": "./dist/index.js",
